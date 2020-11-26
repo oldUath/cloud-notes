@@ -1,4 +1,6 @@
 import axios from 'axios'
+import baseURLConfig from './config-baeURL'
+console.log(baseURLConfig)
 
 axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'
 axios.defaults.baseURL = 'http://note-server.hunger-valley.com'
