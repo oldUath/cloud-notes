@@ -79,7 +79,12 @@ export default {
       Auth.register(
         {username:this.register.username,password:this.register.password}
       ).then(data=>{
-        console.log(data)
+          this.register.isError = false
+          this.register.notice=''
+          this.$router.push({path:'notebooks'})
+      }).catch(data=>{
+        this.register.isError=true
+        this.register.notice = data.msg
       })
       
     
@@ -101,7 +106,15 @@ export default {
       Auth.login(
         {username:this.register.username,password:this.register.password}
       ).then(data=>{
+        this.login.isError = false
+        this.login.notice=''
+        this.$router.push({path:'notebooks'})
+
+        console.log('start login...')
+      }).catch(data=>{
         console.log(data)
+        this.login.isError = true
+        this.login.notice = data.msg
       })
     },
   },
