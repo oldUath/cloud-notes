@@ -32,9 +32,14 @@
 
 <script>
 import Auth from '@/apis/auth'
-  Auth.getInfo().then(data=>{
-    console.log(data)
-  })
+import Bus from '@/helpers/bus'
+
+
+// //获取登录状态信息
+//   Auth.getInfo().then(data=>{
+//     console.log(data)
+//   })
+
 export default {
   data() {
     return {
@@ -81,6 +86,7 @@ export default {
       ).then(data=>{
           this.register.isError = false
           this.register.notice=''
+        Bus.$emit('userInfo',{username:this.login.username})
           this.$router.push({path:'notebooks'})
       }).catch(data=>{
         this.register.isError=true
@@ -109,7 +115,7 @@ export default {
         this.login.isError = false
         this.login.notice=''
         this.$router.push({path:'notebooks'})
-
+        Bus.$emit('userInfo',{username:this.login.username})
         console.log('start login...')
       }).catch(data=>{
         console.log(data)
