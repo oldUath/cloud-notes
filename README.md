@@ -1,21 +1,6 @@
-# vue-biji
+### 把目录切换到一个合适的地方开始创建项目，基于webpack创建
+`vue init webpack 项目名`
 
-> A Vue.js project
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#### 创建好之后，有可能会显示这个，其中没有node_modules目录，那么就要运行npm install先安装依赖
+`npm install`
