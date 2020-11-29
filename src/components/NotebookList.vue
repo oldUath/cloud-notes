@@ -31,6 +31,9 @@
 
 <script>
 import Auth from "@/apis/auth";
+import Notebooks from '@/apis/notebook'
+
+window.notebooks = Notebooks
 export default {
   data() {
     return {
