@@ -9,15 +9,15 @@
             <div class="book-list">
                 <a href="#" class="notebook"> 
                     <div>
-                        <span class="iconfont icon-notebook">笔记本标题1<span class="count">3</span><span class="action">编辑</span></span>
+                        <span class="iconfont icon-notebook"></span>笔记本标题1<span >3</span><span class="action">编辑</span>
                         
                         <span class="action">删除</span>
                         <span class="date">3天谴</span>
                     </div>
                 </a>
-                 <a href="#" class="notebook">
+                <a href="#" class="notebook"> 
                     <div>
-                        <span class="iconfont icon-notebook">笔记本标题2<span class="count">3</span><span class="action">编辑</span></span>
+                        <span class="iconfont icon-notebook"></span>笔记本标题1<span >3</span><span class="action">编辑</span>
                         
                         <span class="action">删除</span>
                         <span class="date">3天谴</span>
