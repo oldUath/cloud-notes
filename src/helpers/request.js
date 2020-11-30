@@ -1,5 +1,6 @@
 import axios from 'axios'
 import baseURLConfig from './config-baeURL'
+import {Message} from 'element-ui'
 console.log(baseURLConfig)
 
 axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'
@@ -26,10 +27,17 @@ export default function request(url,type='GET',data ={}){
                 resolve(res.data)
             }else{
                 console.error(res.data)
+                Message({
+                    type:'error',
+                    message:res.data.msg
+                })
                 reject(res.data)
             }
         }).catch(err=>{
-            console.error({msg:网络异常})
+            Message({
+                type:'error',
+                message:"网络异常"
+            })
             reject({msg:'网络异常'})
         })
     })
