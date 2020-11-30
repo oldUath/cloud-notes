@@ -13,7 +13,8 @@
               <span>{{item.noteCounts}}</span><span class="action" @click.stop.prevent="onEdit(item)">编辑</span>
 
               <span class="action" @click.stop.prevent="onDelete(item)">删除</span>
-              <span class="date">3天谴</span>
+              <span class="date">{{item.createdAt}}</span>
+
             </div>
           </router-link>
           
@@ -58,8 +59,6 @@ export default {
         console.log(res.data);
         alert(res.msg)
         this.notebooks.unshift(res.data)
-        
-        
       })
 
       console.log("create...");
