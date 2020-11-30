@@ -4,7 +4,7 @@ import {Message} from 'element-ui'
 console.log(baseURLConfig)
 
 axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'
-axios.defaults.baseURL = 'http://note-server.hunger-valley.com'
+axios.defaults.baseURL = baseURLConfig.baseURL
 axios.defaults.withCredentials=true
 
 export default function request(url,type='GET',data ={}){

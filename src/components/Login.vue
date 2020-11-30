@@ -78,8 +78,7 @@ export default {
         this.register.notice = "密码长度为6~16个字符";
         return;
       }
-      this.register.isError = false;
-      this.register.notice = "";
+                                       
       console.log(`start register..., username: ${this.register.username} , password: ${this.register.password}`);
       Auth.register(
         {username:this.register.username,password:this.register.password}
@@ -106,16 +105,14 @@ export default {
         this.login.notice = "密码长度为6~16个字符";
         return;
       }
-      this.login.isError = false;
-      this.login.notice = "";
       console.log(`start login..., username: ${this.login.username} , password: ${this.login.password}`);
       Auth.login(
-        {username:this.register.username,password:this.register.password}
+        {username:this.login.username,password:this.login.password}
       ).then(data=>{
         this.login.isError = false
         this.login.notice=''
-        this.$router.push({path:'notebooks'})
         Bus.$emit('userInfo',{username:this.login.username})
+        this.$router.push({path:'notebooks'})
         console.log('start login...')
       }).catch(data=>{
         console.log(data)
