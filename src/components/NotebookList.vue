@@ -7,7 +7,7 @@
       <div class="layout">
         <h3>笔记本列表{{ notebooks.length }}</h3>
         <div class="book-list">
-          <router-link to="/note/1" v-for="(item, index) in notebooks" :key="index" class="notebook">
+          <router-link :to="`/note?notebookId=${item.id}`" v-for="(item, index) in notebooks" :key="index" class="notebook">
             <div>
               <span class="iconfont icon-notebook"></span>{{ item.title }} <span>{{ item.noteCounts }}</span
               ><span class="action" @click.stop.prevent="onEdit(item)">编辑</span>
