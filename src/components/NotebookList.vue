@@ -49,13 +49,42 @@ export default {
   },
   methods: {
     onCreate() {
+      let title = window.prompt('创建新笔记本');
+      if(title.trim() === ''){
+        alert('笔记本名不能为空')
+        return
+      }
+      Notebooks.addNoteBook({title}).then(res=>{
+        console.log(res.data);
+        alert(res.msg)
+        this.notebooks.unshift(res.data)
+        
+        
+      })
+
       console.log("create...");
     },
     onEdit(item) {
       console.log("edit...");
+      let title = window.prompt('修改标题',item.title);
+      Notebooks.updateNotebook(item.id,{title})
+        .then(res=>{
+          console.log(res)
+          alert(res.msg)
+          item.title = title
+        })
     },
     onDelete(item) {
       console.log("delete");
+      let isConfirm = window.confirm('你确定要删除吗')
+      if(isConfirm){
+        Notebooks.deleteNotebook(item.id).then(res=>{
+          console.log(res)
+          this.notebooks.splice(this.notebooks.indexOf(item),1)
+          alert(res.msg)
+
+        })
+      }
     },
   },
 };
