@@ -1,4 +1,5 @@
 import request from '@/helpers/request'
+import util from '@/helpers/util'
 
 const URL = {
     GET:'/notebooks',
@@ -13,6 +14,9 @@ export default {
             request(URL.GET).then(res=>{
                 // 获取到笔记本信息，然后进行排序,最新的在前面
                 res.data = res.data.sort((notebook1,notebook2)=>notebook1.createdAt<notebook2.createdAt)
+                res.data.forEach(notebook=>{
+                        notebook.friendlyCreatedAt = util.friendlyDate(notebook.createdAt)
+                    })
                 resolve(res)
             }).catch(err=>{
                 reject(err)

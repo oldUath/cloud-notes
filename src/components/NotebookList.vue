@@ -13,7 +13,7 @@
               ><span class="action" @click.stop.prevent="onEdit(item)">编辑</span>
 
               <span class="action" @click.stop.prevent="onDelete(item)">删除</span>
-              <span class="date">{{ item.createdAt }}</span>
+              <span class="date">{{ item.friendlyCreatedAt }}</span>
             </div>
           </router-link>
         </div>
@@ -25,6 +25,7 @@
 <script>
 import Auth from "@/apis/auth";
 import Notebooks from "@/apis/notebook";
+import util from '@/helpers/util'
 Auth.getInfo().then((res) => {
   console.log("用户信息", res.data);
 });
@@ -58,6 +59,7 @@ export default {
           return Notebooks.addNoteBook({ title: value });
         })
         .then((res) => {
+          res.data.friendlyCreatedAt = util.friendlyDate(res.data.createdAt)
           this.notebooks.unshift(res.data);
           this.$message({
             type: "success",
