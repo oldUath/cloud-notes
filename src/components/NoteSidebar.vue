@@ -1,0 +1,62 @@
+<template>
+  <div class="note-sidebar">
+    <span class="btn add-note" @click="addNote" >添加笔记</span>
+    <el-dropdown class="notebook-title"  @command="handleCommand" placement="bottom">
+      <span class="el-dropdown-link">
+        笔记本标题 <i class="iconfont icon-down"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item v-for="(notebook,index) in notebooks" :key="index" :command="notebook.id">{{notebook.title}}</el-dropdown-item>
+        <el-dropdown-item  command="trash">回收站</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+    <div class="menu">
+      <div>更新时间</div>
+      <div>标题</div>
+    </div>
+    <ul class="notes">
+      <li v-for="note in notes" :key="note.id">
+        <router-link :to="`/note?noteId=${note.id}`">
+          <span class="date">{{note.updatedAtFriendly}}</span>
+          <span class="title">{{note.title}}</span>          
+        </router-link>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+  import Notebooks from '@/apis/notebook'
+  import Bus from '@/helpers/bus'
+
+  export default {
+   
+    data() {
+      return {
+        notebooks: [
+            {id:1,title:'hello'},
+            {id:2,title:'hello2'},
+        ],
+        notes:[
+            {id:11,title:'第一个',updatedAtFriendly:'刚刚'},
+            {id:12,title:'第er个',updatedAtFriendly:'33s'},
+        ],
+      }
+    },
+
+    methods: {
+      handleCommand(cmd){
+          console.log(cmd)
+      }
+    }
+  }
+
+</script>
+
+
+<style lang="less" >
+@import url(../assets/css/noteSidebar.less);
+
+</style>
+
+
