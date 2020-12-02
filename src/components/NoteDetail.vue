@@ -7,15 +7,15 @@
         <div class="note-bar">
           <span>创建日期：{{ curNote.createdAtFriendly }}</span>
           <span>更新日期：{{ curNote.updatedAtFriendly }}</span>
-          <span>{{ curNote.statusText }}</span>
+          <span>{{ statusText }}</span>
           <span class="iconfont icon-delete"></span>
           <span class="iconfont icon-fullscreen"></span>
         </div>
         <div class="note-title">
-          <input type="text" placeholder="请输入笔记名称" v-model="curNote.title" />
+          <input type="text" placeholder="请输入笔记名称" @keydown="statusText='正在输入...'" @input="updateNote" v-model="curNote.title" />
         </div>
         <div class="editor">
-          <textarea v-show="true" :value="curNote.content" placeholder="输入内容支持markdown语法"></textarea>
+          <textarea v-show="true" v-model="curNote.content" @input="updateNote" @keydown="statusText='正在输入...'" placeholder="输入内容支持markdown语法"></textarea>
           <div class="preview markdown-body" v-html="false" v-show="false"></div>
         </div>
       </div>
@@ -27,12 +27,17 @@
 import Auth from "@/apis/auth";
 import NoteSidebar from "./NoteSidebar.vue";
 import Bus from "@/helpers/bus";
+// 节流函数，当用户输入完后才进行保存
+import _ from 'lodash'
+import Notes from '../apis/note'
+
 export default {
   components: { NoteSidebar },
   data() {
     return {
       curNote: {}, //当前选中的note
       notes: [], //所有的note
+      statusText:'笔记未改动'
     };
   },
   created() {
@@ -45,6 +50,23 @@ export default {
       this.curNote = val.find((note) => note.id == this.$route.query.noteId) || {};
     });
   },
+
+  methods: {
+    updateNote:_.debounce(function(){
+      Notes.updateNote({noteId:this.curNote.id},{title:this.curNote.title,
+      content:this.curNote.content})
+        .then(data=>{
+          this.statusText='已保存'
+        }).catch(data=>{
+          this.statusText='保存出错'
+        })
+
+    },300)
+
+    
+  },
+
+
   // 路由守卫
   beforeRouteUpdate(to, from, next) {
     console.log("beforeRouteUpdate");
