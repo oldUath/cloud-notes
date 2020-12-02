@@ -42,10 +42,7 @@
     data() {
       return {
         notebooks: [],
-        notes:[
-            {id:11,title:'第一个',updatedAtFriendly:'刚刚'},
-            {id:12,title:'第er个',updatedAtFriendly:'33s'},
-        ],
+        notes:[],
       }
     },
 
