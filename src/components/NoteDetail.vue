@@ -3,9 +3,9 @@
     <note-sidebar></note-sidebar>
     <div class="note-detail">
       <div class="note-bar">
-        <span>创建日期：2天前</span>
-        <span>更新日期：1s</span>
-        <span>已保存</span>
+        <span>创建日期：{{curNote.createdAtFriendly}}</span>
+        <span>更新日期：{{curNote.updatedAtFriendly}}</span>
+        <span>{{curNote.statusText}}</span>
         <span class="iconfont icon-delete"></span>
         <span class="iconfont icon-fullscreen"></span>
       </div>
@@ -27,7 +27,13 @@ export default {
   components: { NoteSidebar },
   data() {
     return {
-      msg: "笔记详情页",
+      curNote:{
+        title:'我的笔记',
+        content:'我的笔记内容',
+        createdAtFriendly:'1天前',
+        updatedAtFriendly:'刚刚',
+        statusText:'未更新'
+      }
     };
   },
   created() {
