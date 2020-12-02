@@ -50,8 +50,12 @@
     },
 
     methods: {
-      handleCommand(cmd){
-          console.log(cmd)
+      handleCommand(notebookId){
+        if(notebookId !== 'trash'){
+          Notes.getAll({notebookId}).then(res=>{
+            this.notes = res.data
+          })
+        }
       }
     }
   }
