@@ -36,6 +36,8 @@ export default {
       this.curBook = this.notebooks.find((notebook) => notebook.id == this.$route.query.notebookId) || this.notebooks[0] || {};
       return Notes.getAll({ notebookId: this.curBook.id }).then((res) => {
         this.notes = res.data;
+        // 向父组件传递树数据
+        this.$emit('update:notes',this.notes)
       });
     });
   },
@@ -44,6 +46,8 @@ export default {
       notebooks: [],
       notes: [],
       curBook: {}, //当前笔记本
+      notes:[]
+
     };
   },
 
@@ -55,6 +59,8 @@ export default {
       this.curBook = this.notebooks.find(notebook => notebook.id == notebookId)
       Notes.getAll({ notebookId }).then((res) => {
         this.notes = res.data;
+        // 向父组件传递树数据
+        this.$emit('update:notes',this.notes)
       });
     },
   },
