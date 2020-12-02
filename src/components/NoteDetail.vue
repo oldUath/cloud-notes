@@ -10,7 +10,7 @@
         <span class="iconfont icon-fullscreen"></span>
       </div>
       <div class="note-title">
-        <input type="text" placeholder="请输入笔记名称" :value="curNote.title" />
+        <input type="text" placeholder="请输入笔记名称" v-model="curNote.title" />
       </div>
       <div class="editor">
         <textarea v-show="true" :value="curNote.content" placeholder="输入内容支持markdown语法"></textarea>
@@ -23,6 +23,7 @@
 <script>
 import Auth from "@/apis/auth";
 import NoteSidebar from "./NoteSidebar.vue";
+import Bus from '@/helpers/bus'
 export default {
   components: { NoteSidebar },
   data() {
@@ -36,6 +37,9 @@ export default {
       if (!res.isLogin) {
         this.$router.push({ path: "/login" });
       }
+    })
+    Bus.$once('update:notes',val=>{
+      this.curNote = val.find(note=>note.id== this.$route.query.noteId)||{}
     })
   },
   // 路由守卫

@@ -36,8 +36,9 @@ export default {
       this.curBook = this.notebooks.find((notebook) => notebook.id == this.$route.query.notebookId) || this.notebooks[0] || {};
       return Notes.getAll({ notebookId: this.curBook.id }).then((res) => {
         this.notes = res.data;
-        // 向父组件传递树数据
+        // 向父组件传递数据
         this.$emit('update:notes',this.notes)
+        Bus.$emit('update:notes',this.notes)
       });
     });
   },
