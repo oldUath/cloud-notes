@@ -8,7 +8,7 @@
           <span>创建日期：{{ curNote.createdAtFriendly }}</span>
           <span>更新日期：{{ curNote.updatedAtFriendly }}</span>
           <span>{{ statusText }}</span>
-          <span class="iconfont icon-delete"></span>
+          <span class="iconfont icon-delete" @click="deleteNote"></span>
           <span class="iconfont icon-fullscreen"></span>
         </div>
         <div class="note-title">
@@ -61,7 +61,16 @@ export default {
           this.statusText='保存出错'
         })
 
-    },300)
+    },300),
+    deleteNote(){
+      Notes.deleteNote({noteId:this.curNote.id})
+        .then(data=>{
+          this.$message.success(data.msg)
+          // 删除后从notes中也删掉
+          this.notes.splice(this.notes.indexOf(this.curNote),1)
+          // this.$router.replace({path:'/note'})
+        })
+    }
 
     
   },
