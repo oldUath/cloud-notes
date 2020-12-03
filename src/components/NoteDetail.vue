@@ -9,14 +9,15 @@
           <span>更新日期：{{ curNote.updatedAtFriendly }}</span>
           <span>{{ statusText }}</span>
           <span class="iconfont icon-delete" @click="deleteNote"></span>
-          <span class="iconfont icon-fullscreen"></span>
+          <span class="iconfont icon-fullscreen" @click="isShowPreview = !isShowPreview"></span>
         </div>
         <div class="note-title">
           <input type="text" placeholder="请输入笔记名称" @keydown="statusText='正在输入...'" @input="updateNote" v-model="curNote.title" />
         </div>
         <div class="editor">
-          <textarea v-show="true" v-model="curNote.content" @input="updateNote" @keydown="statusText='正在输入...'" placeholder="输入内容支持markdown语法"></textarea>
-          <div class="preview markdown-body" v-html="false" v-show="false"></div>
+          <textarea v-show="!isShowPreview" v-model="curNote.content" @input="updateNote" @keydown="statusText='正在输入...'" placeholder="输入内容支持markdown语法"></textarea>
+          <div class="preview markdown-body" v-html="previewContent" v-show="isShowPreview">
+          </div>
         </div>
       </div>
     </div>
@@ -30,6 +31,9 @@ import Bus from "@/helpers/bus";
 // 节流函数，当用户输入完后才进行保存
 import _ from 'lodash'
 import Notes from '../apis/note'
+//使用markdown
+import MarkdownIt from 'markdown-it'
+let md = new MarkdownIt();
 
 export default {
   components: { NoteSidebar },
@@ -37,7 +41,8 @@ export default {
     return {
       curNote: {}, //当前选中的note
       notes: [], //所有的note
-      statusText:'笔记未改动'
+      statusText:'笔记未改动',
+      isShowPreview:false
     };
   },
   created() {
@@ -50,7 +55,11 @@ export default {
       this.curNote = val.find((note) => note.id == this.$route.query.noteId) || {};
     });
   },
-
+  computed:{
+    previewContent(){
+      return md.render(this.curNote.content|| "")
+    }
+  },
   methods: {
     updateNote:_.debounce(function(){
       Notes.updateNote({noteId:this.curNote.id},{title:this.curNote.title,
@@ -71,10 +80,7 @@ export default {
           // this.$router.replace({path:'/note'})
         })
     }
-
-    
   },
-
 
   // 路由守卫
   beforeRouteUpdate(to, from, next) {
