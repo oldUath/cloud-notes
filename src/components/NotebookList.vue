@@ -26,15 +26,15 @@
 import Auth from "@/apis/auth";
 import Notebooks from "@/apis/notebook";
 import util from '@/helpers/util'
+import {mapState,mapActions,mapGetters} from 'vuex'
+
+
 Auth.getInfo().then((res) => {
   console.log("用户信息", res.data);
 });
 export default {
   data() {
-    return {
-      msg: "笔记本列表",
-      notebooks: [],
-    };
+    return {};
   },
   created() {
     Auth.getInfo().then((res) => {
@@ -42,10 +42,15 @@ export default {
         this.$router.push({ path: "/login" });
       }
     });
-    Notebooks.getAll().then((res) => {
-      this.notebooks = res.data;
-      console.log(res.data);
-    });
+
+    // Notebooks.getAll().then((res) => {
+    //   this.notebooks = res.data;
+    //   console.log(res.data);
+    // });
+    this.$store.dispatch('getNotebooks')
+  },
+  computed:{
+    ...mapGetters(['notebooks'])
   },
   methods: {
     onCreate() {
