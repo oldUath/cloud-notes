@@ -9,7 +9,6 @@ axios.defaults.withCredentials=true
 
 export default function request(url,type='GET',data ={}){
     return new Promise((resolve,reject)=>{
-
         let option={
             url,
             method:type,

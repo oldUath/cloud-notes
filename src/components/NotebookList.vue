@@ -7,8 +7,8 @@
       <div class="layout">
         <h3>笔记本列表{{ notebooks.length }}</h3>
         <div class="book-list">
-          <router-link :to="`/note?notebookId=${item.id}`" v-for="(item, index) in notebooks" :key="index" class="notebook">
-            <div>
+          <router-link  :to="`/note?notebookId=${item.id}`" v-for="(item, index) in notebooks" :key="index"   class="notebook">
+            <div >
               <span class="iconfont icon-notebook"></span>{{ item.title }} <span>{{ item.noteCounts }}</span
               ><span class="action" @click.stop.prevent="onEdit(item)">编辑</span>
 
@@ -53,6 +53,14 @@ export default {
     ...mapGetters(['notebooks'])
   },
   methods: {
+    ...mapActions([
+      'getNotebooks',
+      'addNotebook',
+      'updateNotebook',
+      'deleteNotebook'
+    ]),
+
+
     onCreate() {
       this.$prompt("请输入笔记本标题", "创建笔记本", {
         confirmButtonText: "确定",
@@ -61,18 +69,11 @@ export default {
         inputErrorMessage: "标题不能为空，且不超过30个字符",
       })
         .then(({ value }) => {
-          return Notebooks.addNoteBook({ title: value });
+          this.addNotebook({ title: value });
+
         })
-        .then((res) => {
-          res.data.friendlyCreatedAt = util.friendlyDate(res.data.createdAt)
-          this.notebooks.unshift(res.data);
-          this.$message({
-            type: "success",
-            message: res.msg,
-          });
-        })
-      console.log("create...");
     },
+
     onEdit(item) {
       console.log("edit...");
       let title = "";
@@ -85,16 +86,10 @@ export default {
       })
         .then(({ value }) => {
           title = value;
-          return Notebooks.updateNotebook(item.id, { title });
-        })
-        .then((res) => {
-          item.title = title;
-          this.$message({
-            type: "success",
-            message: res.msg,
-          });
+          this.updateNotebook({notebookId:item.id,title:value });
         })
     },
+
     onDelete(item) {
       console.log("delete");
       this.$confirm("此操作将删除该笔记本, 是否继续?", "提示", {
@@ -104,15 +99,7 @@ export default {
       })
         .then(() => {
           // 在后端删除掉
-          return Notebooks.deleteNotebook(item.id);
-        })
-        .then((res) => {
-          // 删除掉页面的
-          this.notebooks.splice(this.notebooks.indexOf(item), 1);
-          this.$message({
-            type: "success",
-            message: res.msg,
-          });
+          this.deleteNotebook({notebookId:item.id});
         })
     },
   },

@@ -46,6 +46,7 @@ export default {
     };
   },
   created() {
+    console.log('this.notes',this.notes)
     Auth.getInfo().then((res) => {
       if (!res.isLogin) {
         this.$router.push({ path: "/login" });
@@ -74,10 +75,11 @@ export default {
     deleteNote(){
       Notes.deleteNote({noteId:this.curNote.id})
         .then(data=>{
+          console.log(this.notes.notesCount)
           this.$message.success(data.msg)
           // 删除后从notes中也删掉
           this.notes.splice(this.notes.indexOf(this.curNote),1)
-          // this.$router.replace({path:'/note'})
+          this.$router.replace({path:'/note'})
         })
     }
   },
@@ -88,7 +90,7 @@ export default {
     console.log(to, from);
     this.curNote = this.notes.find((note) => note.id == to.query.noteId);
     next();
-  },
+  }, 
 };
 </script>
 
