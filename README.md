@@ -8,3 +8,5 @@ vue init webpack 项目名
 ```
 npm install
 ```
+
+### 使用vuex进行全局数据管理
