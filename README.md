@@ -8,3 +8,8 @@ vue init webpack 项目名
 ```
 npm install
 ```
+
+### 使用vuex进行全局数据管理
+  state 保存数据
+  mutations 进行对数据的操作，不能写异步函数
+  actions   可以写异步函数
