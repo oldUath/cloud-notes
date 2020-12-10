@@ -21,7 +21,7 @@
         <span> | </span>
         <span> 更新日期: {{ curTrashNote.updatedAtFriendly }}</span>
         <span> | </span>
-        <span> 所属笔记本: {{  }}</span>
+        <span> 所属笔记本: {{ belongTo }}</span>
 
         <a class="btn action" @click="onRevert">恢复</a>
         <a class="btn action" @click="onDelete">彻底删除</a>
@@ -56,7 +56,8 @@ export default {
   computed: {
     ...mapGetters([
       'trashNotes',
-      'curTrashNote'
+      'curTrashNote',
+      'belongTo'
     ]),
     compiledMarkdown() {
       return md.render(this.curTrashNote.content || "");

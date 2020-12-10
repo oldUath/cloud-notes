@@ -12,7 +12,11 @@ const getters={
     curTrashNote:(state,getters)=>{
         if(!state.curTrashNoteId) return getters.trashNotes[0]||{}
         return state.trashNotes.find(note=>note.id == state.curTrashNoteId) || {}
-    }
+    },
+    belongTo: (state, getters, rootState, rootGetters) => {
+        let notebook = rootGetters.notebooks.find(notebook => notebook.id == getters.curTrashNote.notebookId) || {}
+        return notebook.title || ''
+      }
 }
 const mutations={
     setTrashNotes(state,payload){
