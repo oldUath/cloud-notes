@@ -93,8 +93,6 @@ computed:{
 
   // 路由守卫
   beforeRouteUpdate(to, from, next) {
-    console.log("beforeRouteUpdate");
-    console.log(to, from);
     this.setCurNote({curNoteId:to.query.noteId})
     next();
   }, 

@@ -1,5 +1,5 @@
 <template>
-  <div class="detail" id="trash"> 
+  <div class="detail" id="trash">
     <div class="note-sidebar">
       <h3 class="notebook-title">回收站</h3>
       <div class="menu">
@@ -21,7 +21,7 @@
         <span> | </span>
         <span> 更新日期: {{ curTrashNote.updatedAtFriendly }}</span>
         <span> | </span>
-        <span> 所属笔记本: {{ belongTo }}</span>
+        <span> 所属笔记本: {{  }}</span>
 
         <a class="btn action" @click="onRevert">恢复</a>
         <a class="btn action" @click="onDelete">彻底删除</a>
@@ -36,75 +36,56 @@
   </div>
 </template>
 <script>
-import Auth from "@/apis/auth";
-import Trash from '@/apis/trash'
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import MarkdownIt from "markdown-it";
-window.Trash = Trash
 
 let md = new MarkdownIt();
 
-
 export default {
   data() {
-    return {
-      msg: "笔记本回收",
-      curTrashNote: {
-        id: 3,
-        title: "笔记",
-        content: "### dddd",
-        createdAtFriendly: "2小时前",
-        updatedAtFriendly: "刚刚",
-      },
-      belongTo: "我的笔记本",
-      trashNotes: [
-        {
-          id: 1,
-          title: "笔记1",
-          content: "### dd1dd",
-          createdAtFriendly: "2小时前",
-          updatedAtFriendly: "刚刚",
-        },
-        {
-          id: 2,
-          title: "笔记2",
-          content: "### ddd2d",
-          createdAtFriendly: "2小时前",
-          updatedAtFriendly: "刚刚",
-        },
-        {
-          id: 3,
-          title: "笔记3",
-          content: "### dddd3",
-          createdAtFriendly: "2小时前",
-          updatedAtFriendly: "刚刚",
-        },
-      ],
-    };
+    return {};
   },
   created() {
-    Auth.getInfo().then((res) => {
-      if (!res.isLogin) {
-        this.$router.push({ path: "/login" });
-      }
-    });
+    this.checkLogin({ path: "/login" });
+    this.getNotebooks()
+    this.getTrashNotes()
+      .then(()=>{
+        this.setCurTrashNote({curTrashNoteId:this.$route.query.noteId})
+      })
   },
   computed: {
+    ...mapGetters([
+      'trashNotes',
+      'curTrashNote'
+    ]),
     compiledMarkdown() {
       return md.render(this.curTrashNote.content || "");
     },
   },
   methods: {
+    ...mapMutations([
+      'setCurTrashNote'
+    ]),
+    ...mapActions(["checkLogin", "deleteTrashNote",'revertTrashNote','getTrashNotes','getNotebooks']),
     onDelete() {
-      console.log("onDelete");
+      this.deleteTrashNote({ noteId: this.curTrashNote.id });
     },
     onRevert() {
-      console.log("revert");
+      this.revertTrashNote({noteId:this.curTrashNote.id})
     },
+
   },
+        // 路由守卫,更改路由时就会执行
+  beforeRouteUpdate(to, from, next){
+    console.log('beforeRouteUpdate',to)
+    this.setCurTrashNote({ curTrashNoteId: to.query.noteId})
+    next()
+  }
 };
+
 </script>
 
-<style lang='less'>
+<style lang="less">
 @import url(../assets/css/noteSidebar.less);
 @import url(../assets/css/noteDetail.less);
 #trash {
@@ -119,8 +100,7 @@ export default {
       margin-left: 10px;
       padding: 2px 4px;
       font-size: 12px;
-
     }
   }
- }
+}
 </style>
