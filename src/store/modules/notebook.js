@@ -20,7 +20,7 @@ const mutations = {
         state.notebooks = payload.notebooks
     },
     addNotebook(state,payload){
-        state.notebooks.unshift(payload.notebooks)
+        state.notebooks.unshift(payload.notebook)
     },
     updateNotebook(state,payload){
         let notebook =state.notebooks.find(notebook=>notebook.id == payload.notebookId)||{}

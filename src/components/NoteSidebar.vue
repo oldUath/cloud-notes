@@ -46,18 +46,6 @@ export default {
         })
       })
 
-
-
-    // Notebooks.getAll().then((res) => {
-    //   this.notebooks = res.data;
-    //   this.curBook = this.notebooks.find((notebook) => notebook.id == this.$route.query.notebookId) || this.notebooks[0] || {};
-    //   return Notes.getAll({ notebookId: this.curBook.id }).then((res) => {
-    //     this.notes = res.data;
-    //     // 向父组件传递数据
-    //     this.$emit('update:notes',this.notes)
-    //     Bus.$emit('update:notes',this.notes)
-    //   });
-    // });
   },
   data() {
     return {};
@@ -82,12 +70,25 @@ export default {
       'updateNote',
       'deleteNote'
     ]),
+    //切换笔记本
     handleCommand(notebookId) {
       if (notebookId == "trash") {
         return this.$router.push({path:'/trash'})
       }
       this.$store.commit('setCurBook',{curBookId:notebookId})
-      this.getNotes({notebookId})
+      this.getNotes({notebookId}).then(()=>{
+        this.setCurNote({});
+        this.$router.replace({
+            path:'/note',
+            query:{
+              noteId:this.curNote.id,
+              notebookId:this.curBook.id
+            }
+        })
+      })
+      
+
+
       // Notes.getAll({ notebookId }).then((res) => {
       //   this.notes = res.data;
       //   // 向父组件传递数据
