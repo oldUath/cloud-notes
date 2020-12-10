@@ -2,12 +2,17 @@ import Note from '@/apis/note'
 import {Message} from 'element-ui'
 
 const state = {
-    notes:[],
-    curNote:{}
+    notes:null,
+    curNoteId:null
 }
 const getters ={
     // 最后获取数据
-    notes:state=>state.notes
+    notes:state=>state.notes||[],
+    curNote:state=>{
+        if(!Array.isArray(state.notes)) return {}
+        if(!state.curNoteId) return state.notes[0] || {}
+        return state.notes.find(note => note.id == state.curNoteId) || {}
+    }
 }
 const mutations = {
     // 操作
@@ -24,18 +29,21 @@ const mutations = {
     },
     deleteNote(state,payload){
         state.notes = state.notes.filter(note=>note.id !== payload.noteId)
-    }
+    },
+    setCurNote(state,payload){
+        state.curNoteId = payload.curNoteId
+    },
 }
 const actions ={
     getNotes({commit},{notebookId}){
-        Note.getAll({notebookId})
+       return Note.getAll({notebookId})
             .then(res=>{
                 commit('setNote',{notes:res.data})
             })
     },
 
     addNote:({ commit }, {notebookId,title,content})=> {
-         Note.addNote({notebookId},{ title,content})
+        return Note.addNote({notebookId},{ title,content})
           .then(res => {
             console.log('successs',res)
             commit('addNote', { note: res.data })
