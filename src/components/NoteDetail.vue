@@ -75,7 +75,6 @@ computed:{
     onUpdateNote:_.debounce(function(){
       this.updateNote({noteId:this.curNote.id,title:this.curNote.title,
       content:this.curNote.content})
-
         .then(data=>{
           this.statusText='已保存'
         }).catch(data=>{

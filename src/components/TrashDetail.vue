@@ -50,7 +50,13 @@ export default {
     this.getNotebooks()
     this.getTrashNotes()
       .then(()=>{
-        this.setCurTrashNote({curTrashNoteId:this.$route.query.noteId})
+        this.setCurTrashNote({curTrashNoteId:this.$route.query.noteId});
+        this.$router.replace({
+          path:'/trash',
+          query:{
+            noteId:this.curTrashNote.id
+          }
+        })
       })
   },
   computed: {
