@@ -1,5 +1,5 @@
 <template>
-  <div class="detail" id="trash">
+  <div class="detail" id="trash"> 
     <div class="note-sidebar">
       <h3 class="notebook-title">回收站</h3>
       <div class="menu">
@@ -37,9 +37,12 @@
 </template>
 <script>
 import Auth from "@/apis/auth";
+import Trash from '@/apis/trash'
 import MarkdownIt from "markdown-it";
+window.Trash = Trash
 
 let md = new MarkdownIt();
+
 
 export default {
   data() {
