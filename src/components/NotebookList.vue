@@ -37,17 +37,14 @@ export default {
     return {};
   },
   created() {
-    Auth.getInfo().then((res) => {
-      if (!res.isLogin) {
-        this.$router.push({ path: "/login" });
-      }
-    });
+        this.checkLogin({path:'/login'})
+        this.getNotebooks()
+
 
     // Notebooks.getAll().then((res) => {
     //   this.notebooks = res.data;
     //   console.log(res.data);
     // });
-    this.$store.dispatch('getNotebooks')
   },
   computed:{
     ...mapGetters(['notebooks'])
@@ -57,7 +54,8 @@ export default {
       'getNotebooks',
       'addNotebook',
       'updateNotebook',
-      'deleteNotebook'
+      'deleteNotebook',
+      'checkLogin'
     ]),
 
 

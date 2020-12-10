@@ -48,11 +48,8 @@ export default {
   },
   created() {
     console.log('this.notes',this.notes)
-    Auth.getInfo().then((res) => {
-      if (!res.isLogin) {
-        this.$router.push({ path: "/login" });
-      }
-    });
+    this.checkLogin({ path: "/login" })
+
 
   },
 computed:{
@@ -71,7 +68,9 @@ computed:{
     ]),
     ...mapActions([
       'updateNote',
-      'deleteNote'
+      'deleteNote',
+      'checkLogin'
+
     ]),
     onUpdateNote:_.debounce(function(){
       this.updateNote({noteId:this.curNote.id,title:this.curNote.title,
