@@ -35,6 +35,9 @@ import Notes from '../apis/note'
 import MarkdownIt from 'markdown-it'
 let md = new MarkdownIt();
 
+import {mapState,mapMutations,mapActions,mapGetters} from 'vuex'
+
+
 export default {
   components: { NoteSidebar },
   data() {

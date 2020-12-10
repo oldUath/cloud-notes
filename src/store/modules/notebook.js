@@ -2,11 +2,17 @@ import Notebook from '@/apis/notebook'
 import {Message} from 'element-ui'
 
 const state = {
-    notebooks:[]
+    notebooks:null,
+    curBookId:null
 }
 const getters ={
     // 最后获取数据
-    notebooks:state=>state.notebooks
+    notebooks:state=>state.notebooks || [],
+    curBook:state=>{
+        if(!Array.isArray(state.notebooks)) return {}
+        if(!state.curBookId) return state.notebooks[0] || {}
+        return state.notebooks.find(notebook => notebook.id == state.curBookId) || {}
+    }
 }
 const mutations = {
     // 操作
@@ -21,12 +27,15 @@ const mutations = {
         notebook.title = payload.title
     },
     deleteNotebook(state,payload){
-        state.notebooks = state.notebooks.filter(notebook=>notebook.id !== payload.notebookId)
+        state.notebooks = state.notebooks.filter(notebook=>notebook.id != payload.notebookId)
+    },
+    setCurBook(state,payload){
+        state.curBookId = payload.curBookId
     }
 }
 const actions ={
     getNotebooks({commit}){
-        Notebook.getAll()
+       return Notebook.getAll()
             .then(res=>{
                 commit('setNotebooks',{notebooks:res.data})
             })
