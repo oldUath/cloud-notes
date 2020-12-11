@@ -75,10 +75,34 @@ export default {
     ]),
     ...mapActions(["checkLogin", "deleteTrashNote",'revertTrashNote','getTrashNotes','getNotebooks']),
     onDelete() {
-      this.deleteTrashNote({ noteId: this.curTrashNote.id });
+      this.$confirm("删除后将无法回复，你确定吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+          // 在后端彻底删除掉
+          return this.deleteTrashNote({ noteId: this.curTrashNote.id });
+        }).then(()=>{
+          this.setCurTrashNote();
+          this.$router.replace({
+            path:'/trash',
+            query:{
+              noteId:this.curTrashNote.id
+            }
+          })
+        })
     },
     onRevert() {
       this.revertTrashNote({noteId:this.curTrashNote.id})
+        .then(()=>{
+          this.setCurTrashNote();
+          this.$router.replace({
+            path:'/trash',
+            query:{
+              noteId:this.curTrashNote.id
+            }
+          })
+        })
     },
 
   },

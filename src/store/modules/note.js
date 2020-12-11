@@ -47,7 +47,6 @@ const actions ={
           .then(res => {
             console.log('successs',res)
             commit('addNote', { note: res.data })
-            Message.success(res.msg)
           })
       },
 
