@@ -40,6 +40,12 @@ const actions={
                     commit('setUser',{user:res.data})
                 }
             })
+    },
+    logout({commit}){
+        return Auth.logout().then(res => {
+            commit('setUser',{user:res.data})
+            router.push({path:'/login'})
+          });
     }
 }
 
