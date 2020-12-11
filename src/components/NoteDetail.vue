@@ -8,8 +8,9 @@
           <span>创建日期：{{ curNote.createdAtFriendly }}</span>
           <span>更新日期：{{ curNote.updatedAtFriendly }}</span>
           <span>{{ statusText }}</span>
-          <span class="iconfont icon-delete" @click="onDeleteNote"></span>
-          <span class="iconfont icon-fullscreen" @click="isShowPreview = !isShowPreview"></span>
+          <span class="iconfont icon-trash" @click="onDeleteNote"></span>
+          <span class="iconfont icon-bianji" v-show="!isShowPreview" @click="isShowPreview = !isShowPreview"></span>
+          <span class="iconfont icon-xianshi" @click="isShowPreview = !isShowPreview" v-show="isShowPreview" ></span>
         </div>
         <div class="note-title">
           <input type="text" placeholder="请输入笔记名称" @keydown="statusText='正在输入...'" @input="onUpdateNote" v-model="curNote.title" />
@@ -106,5 +107,8 @@ computed:{
   align-items: stretch;
   background: #fff;
   flex: 1;
+}
+.icon-bianji{
+  color: red!important;
 }
 </style>
