@@ -18,7 +18,7 @@ export default {
                    note.updatedAtFriendly = util.friendlyDate(note.updatedAt)
                    return note
                 }).sort((note1,note2)=>{
-                    return note1.updatedAt < note2.updaatedAt
+                    return note1.updatedAt < note2.updatedAt
                 })
                 resolve(res)
             }).catch(err=>{
