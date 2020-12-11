@@ -119,13 +119,17 @@ export default {
 <style lang="less">
 @import url(../assets/css/noteSidebar.less);
 @import url(../assets/css/noteDetail.less);
+.note-sidebar{
+    overflow:scroll ;    
+
+}
 #trash {
   display: flex;
   align-items: stretch;
   background-color: #fff;
   flex: 1;
-
   .note-bar {
+
     .action {
       float: right;
       margin-left: 10px;
