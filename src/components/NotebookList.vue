@@ -13,7 +13,7 @@
               ><span class="action" @click.stop.prevent="onEdit(item)">编辑</span>
 
               <span class="action" @click.stop.prevent="onDelete(item)">删除</span>
-              <span class="date">{{ item.friendlyCreatedAt }}</span>
+              <span class="date">{{ item.createdAtFriendly }}</span>
             </div>
           </router-link>
         </div>
