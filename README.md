@@ -13,3 +13,5 @@ npm install
   state 保存数据
   mutations 进行对数据的操作，不能写异步函数
   actions   可以写异步函数
+
+[预览链接](http://uath.gitee.io/preview-notes/#/login)
